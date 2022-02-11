@@ -3,7 +3,7 @@ resource "google_monitoring_uptime_check_config" "check_service" {
   timeout = "30s"
 
   http_check {
-    path           = "health"
+    path           = "/health"
     port           = 443
     request_method = "GET"
     use_ssl        = true
@@ -13,7 +13,9 @@ resource "google_monitoring_uptime_check_config" "check_service" {
   monitored_resource {
     labels = {
       host = replace(google_cloud_run_service.sub.status[0].url, "https://", "")
+      project_id = "mateus-anthor-test"
     }
     type   = "uptime_url"
   }
+
 }
